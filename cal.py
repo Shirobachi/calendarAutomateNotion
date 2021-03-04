@@ -106,10 +106,13 @@ def parseName(input):
 
     temp2 = temp[1].split(" ")
     for word in temp2:
-        if len(word) > 1:
-            output += word[0].upper()
-        else:
+        if word == word.upper():
             output += word
+        else:
+            if len(word) > 1:
+                output += word[0].upper()
+            else:
+                output += word
     logging.info("Parsed name")
     return output
 
@@ -140,7 +143,6 @@ for event in events:
         startHour = dt.strftime("%H:%M")
 
         row = db.collection.add_row()
-        row.title = today
         row.title = parseName(event['summary'])
         row.date = NotionDate(start, end=end)
         row.tags = "College"
